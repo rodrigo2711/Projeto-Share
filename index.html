@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="_css/estilo.css">
+    <link rel="stylesheet" href="_css/form.css">
+</head>
+<script src="_javascript/funcoes.js"></script>
+
+<body>
+    <div id="interface">
+        <header id="cabecalho">
+            <hgroup>
+                <h1>Cadastre-se</h1>
+
+            </hgroup>
+        </header>
+
+        <form action="post" id="fContato">
+            <fieldset id="usuario">
+                <legend>Identificação do Usuário</legend>
+                <p>
+                    <label for="cNome">Nome:</label>
+                    <input type="text" name="tNome" id="cNome" size="20" maxlength="30" placeholder="Nome Completo">
+                </p>
+
+                <form> Sexo:
+                    <input type="radio" name="cSexo" id="cMas"><label for="cMas">Masculino</label>
+                    <input type="radio" name="cSexo" id="cFem"><label for="cFem">Feminino</label>
+                    <p>
+                        <label for="cNasc">Data de Nascimento:</label>
+                        <input type="date" name="tNasc" id="cNasc">
+                    </p>
+                    <p>
+                        <label for="cCpf">CPF:</label>
+                        <input type="text" name="tCpf" id="cCpf" size="20" maxlength="11" placeholder="CPF">
+                        <!-- Usar js para botar os pontos e traços. -->
+                    </p>
+                    <p>
+                        <label for="cUniversidade">Universidade:</label>
+                        <select name="tUniversidade" id="cUniversidade">
+                            <option value=""> </option>
+                            <option value="UNB">Universidade de Brasília - UnB</option>
+                            <option value="outra">Outra</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="cSemestre">Semestre:</label>
+                        <input type="text" name="tSemestre" id="cSemestre" size="20" maxlength="2"
+                            placeholder="Semestre">
+                    </p>
+                </form>
+
+            </fieldset>
+
+            <fieldset id="endereco">
+                <legend>Endereço do Usuário</legend>
+
+
+                <p>
+                    <label>CEP:
+                        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9">
+                        <button onclick="pesquisar()">Pesquisar</button>
+                    </label><br />
+                </p>
+                <p>
+                    <label>Rua:
+                        <input name="logradouro" type="text" id="logradouro" size="60" /></label><br />
+                </p>
+                <p>
+                    <label>Complemento:
+                        <input name="complemento" type="text" id="complemento" size="40" /></label><br />
+                </p>
+                <p>
+                    <label>Bairro:
+                        <input name="bairro" type="text" id="bairro" size="40" /></label><br />
+                </p>
+                <p>
+                    <label>Cidade:
+                        <input name="cidade" type="text" id="cidade" size="40" /></label><br />
+                </p>
+                <p>
+                    <label>Estado:
+                        <input name="uf" type="text" id="uf" size="2" /></label><br />
+                </p>
+
+                <script language="javascript">
+                    function pesquisar() {
+                        var cep = document.getElementById("cep");
+                        var url = "http://viacep.com.br/ws/" + cep.value + "/json/";
+
+                        var logradouro = document.getElementById("logradouro");
+                        var complemento = document.getElementById("complemento");
+                        var bairro = document.getElementById("bairro");
+                        var cidade = document.getElementById("cidade");
+                        var estado = document.getElementById("uf");
+
+                        fetch(url, { method: 'GET' })
+                            .then(response => {
+                                response.json()
+                                    .then(data => {
+                                        logradouro.value = data.logradouro;
+                                        complemento.value = data.complemento;
+                                        bairro.value = data.bairro;
+                                        cidade.value = data.localidade;
+                                        estado.value = data.uf;
+                                    })
+
+                            })
+                            .catch(err => {
+                                logradouro.value = " ";
+                                complemento.value = " ";
+                                bairro.value = " ";
+                                cidade.value = " ";
+                                estado.value = "1";
+                            })
+                    }
+                </script>
+                <form>
+                    <p>
+                        <label for="cMail">E-mail:</label>
+                        <input type="email" name="tMail" id="cMail">
+                    </p>
+
+                    <p>
+                        <label for="cRepMail">Repetir E-mail:</label>
+                        <input type="email" name="tRepMail" id="cRepMail">
+                        <!-- Usar js para validação-->
+                    </p>
+                    <p>
+                        <label for="cSenha">Senha:</label>
+                        <input type="password" name="tSenha" id="cSenha" size="8" maxlength="8" placeholder="8 dígitos">
+                    </p>
+                    <p>
+                        <label for="cRepSenha">Repetir Senha:</label>
+                        <input type="password" name="tRepSenha" id="cRepSenha" size="8" maxlength="8"
+                            placeholder="8 dígitos">
+                        <!-- Usar js para validação-->
+                    </p>
+
+            </fieldset>
+
+            <fieldset id="profissional">
+                <legend>Dados Profissionais</legend>
+                <p>
+                    <label>Empresa:
+                        <input name="empresa" type="text" id="empresa" size="20" /></label><br />
+                </p>
+                <p>
+                    <label>Cargo:
+                        <input name="cargo" type="text" id="cargo" size="10" /></label><br />
+                </p>
+                <p>
+                    <label>Data de Início:
+                        <input type="date" name="iniciocargo" type="text" id="iniciocargocargo" /></label><br />
+                </p>
+                <p>
+                    <input type="image" name="tEnviar" src="_imagens/botao-enviar.png" alt="">
+                <fieldset>
+        </form>
+
+        <footer id="rodape">
+            <p>
+                <br>
+                <a href="http://facebook.com/cursosemvideo" target="_blank">Facebook
+                </a>|
+                <a href="http://twitter.com/cursosemvideo" target="_blank">Twitter</a>
+            </p>
+        </footer>
+
+    </div>
+</body>
+
+</html>
